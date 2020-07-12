@@ -15,7 +15,7 @@ Aura Router implementation for [chubbyphp-framework][1].
 
  * php: ^7.2
  * [aura/router][2]: ^3.1
- * [chubbyphp/chubbyphp-framework][1]: ^3.0
+ * [chubbyphp/chubbyphp-framework][1]: ^3.1
 
 ## Installation
 
@@ -62,7 +62,7 @@ $app = new Application([
 
                 return $response;
             }
-        ))->pathOptions([Router::PATH_TOKENS => ['name' => '[a-z]+']])
+        ), [], [Router::PATH_TOKENS => ['name' => '[a-z]+']])
     ]), $responseFactory),
 ]);
 
