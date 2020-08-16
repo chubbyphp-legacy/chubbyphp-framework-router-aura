@@ -2,10 +2,10 @@
 
 [![Build Status](https://api.travis-ci.org/chubbyphp/chubbyphp-framework-router-aura.png?branch=master)](https://travis-ci.org/chubbyphp/chubbyphp-framework-router-aura)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyphp/chubbyphp-framework-router-aura/badge.svg?branch=master)](https://coveralls.io/github/chubbyphp/chubbyphp-framework-router-aura?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
 [![Total Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/downloads.png)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
-[![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
-[![Latest Unstable Version](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/v/unstable)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
+[![Daily Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/d/daily)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
 
 ## Description
 
