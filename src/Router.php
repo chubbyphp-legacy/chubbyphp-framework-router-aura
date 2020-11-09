@@ -62,16 +62,16 @@ final class Router implements RouterInterface
     {
         if (!$auraRoute = $this->matcher->match($request)) {
             $failedAuraRoute = $this->matcher->getFailedRoute();
-            switch ($failedAuraRoute->failedRule) {
-                case Allows::class:
-                    throw MethodNotAllowedException::create(
-                        $request->getRequestTarget(),
-                        $request->getMethod(),
-                        $failedAuraRoute->allows
-                    );
-                default:
-                    throw NotFoundException::create($request->getRequestTarget());
+
+            if (Allows::class === $failedAuraRoute->failedRule) {
+                throw MethodNotAllowedException::create(
+                    $request->getRequestTarget(),
+                    $request->getMethod(),
+                    $failedAuraRoute->allows
+                );
             }
+
+            throw NotFoundException::create($request->getRequestTarget());
         }
 
         /** @var RouteInterface $route */
