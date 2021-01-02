@@ -27,22 +27,13 @@ final class Router implements RouterInterface
     /**
      * @var array<string, RouteInterface>
      */
-    private $routes = [];
+    private array $routes = [];
 
-    /**
-     * @var Generator
-     */
-    private $generator;
+    private Generator $generator;
 
-    /**
-     * @var Matcher
-     */
-    private $matcher;
+    private Matcher $matcher;
 
-    /**
-     * @var string
-     */
-    private $basePath;
+    private string $basePath;
 
     /**
      * @param array<int, RouteInterface> $routes

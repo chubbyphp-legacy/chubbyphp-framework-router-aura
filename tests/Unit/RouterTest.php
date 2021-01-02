@@ -393,9 +393,7 @@ final class RouterTest extends TestCase
         $route = $this->getMockByCalls(RouteInterface::class, [
             Call::create('getName')->with()->willReturn('index'),
             Call::create('getPathOptions')->with()
-                ->willReturn([Router::PATH_SPECIAL => function (ServerRequestInterface $request, Route $route) {
-                    return true;
-                }]),
+                ->willReturn([Router::PATH_SPECIAL => fn (ServerRequestInterface $request, Route $route) => true]),
             Call::create('getName')->with()->willReturn('index'),
             Call::create('getPath')->with()->willReturn('/'),
             Call::create('getMethod')->with()->willReturn('GET'),
@@ -434,9 +432,7 @@ final class RouterTest extends TestCase
         $route = $this->getMockByCalls(RouteInterface::class, [
             Call::create('getName')->with()->willReturn('index'),
             Call::create('getPathOptions')->with()
-                ->willReturn([Router::PATH_SPECIAL => function (ServerRequestInterface $request, Route $route) {
-                    return false;
-                }]),
+                ->willReturn([Router::PATH_SPECIAL => fn (ServerRequestInterface $request, Route $route) => false]),
             Call::create('getName')->with()->willReturn('index'),
             Call::create('getPath')->with()->willReturn('/'),
             Call::create('getMethod')->with()->willReturn('GET'),
