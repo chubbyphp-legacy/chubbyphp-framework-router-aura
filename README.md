@@ -1,8 +1,8 @@
 # chubbyphp-framework-router-aura
 
-[![Build Status](https://api.travis-ci.org/chubbyphp/chubbyphp-framework-router-aura.png?branch=master)](https://travis-ci.org/chubbyphp/chubbyphp-framework-router-aura)
+[![CI](https://github.com/chubbyphp/chubbyphp-framework-router-aura/workflows/CI/badge.svg?branch=master)](https://github.com/chubbyphp/chubbyphp-framework-router-aura/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyphp/chubbyphp-framework-router-aura/badge.svg?branch=master)](https://coveralls.io/github/chubbyphp/chubbyphp-framework-router-aura?branch=master)
-[![Infection MSI](https://badge.stryker-mutator.io/github.com/chubbyphp/chubbyphp-framework-router-aura/master)](https://travis-ci.org/chubbyphp/chubbyphp-framework-router-aura)
+[![Infection MSI](https://badge.stryker-mutator.io/github.com/chubbyphp/chubbyphp-framework-router-aura/master)](https://dashboard.stryker-mutator.io/reports/github.com/chubbyphp/chubbyphp-framework-router-aura/master)
 [![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
 [![Total Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/downloads.png)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-framework-router-aura/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura)
