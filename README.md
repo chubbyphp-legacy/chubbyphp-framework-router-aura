@@ -27,14 +27,14 @@ Aura Router implementation for [chubbyphp-framework][1].
 
  * php: ^7.4|^8.0
  * [aura/router][2]: ^3.1
- * [chubbyphp/chubbyphp-framework][1]: ^3.2
+ * [chubbyphp/chubbyphp-framework][1]: ^3.5
 
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-framework-router-aura][10].
 
 ```bash
-composer require chubbyphp/chubbyphp-framework-router-aura "^1.2"
+composer require chubbyphp/chubbyphp-framework-router-aura "^1.3"
 ```
 
 ## Usage
@@ -49,10 +49,11 @@ namespace App;
 use Chubbyphp\Framework\Application;
 use Chubbyphp\Framework\ErrorHandler;
 use Chubbyphp\Framework\Middleware\ExceptionMiddleware;
-use Chubbyphp\Framework\Middleware\RouterMiddleware;
+use Chubbyphp\Framework\Middleware\RouteMatcherMiddleware;
 use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
-use Chubbyphp\Framework\Router\Aura\Router;
+use Chubbyphp\Framework\Router\Aura\RouteMatcher;
 use Chubbyphp\Framework\Router\Route;
+use Chubbyphp\Framework\Router\Routes;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Psr7\Factory\ServerRequestFactory;
@@ -65,7 +66,7 @@ $responseFactory = new ResponseFactory();
 
 $app = new Application([
     new ExceptionMiddleware($responseFactory, true),
-    new RouterMiddleware(new Router([
+    new RouteMatcherMiddleware(new RouteMatcher(new Aura(new Routes([
         Route::get('/hello/{name}', 'hello', new CallbackRequestHandler(
             function (ServerRequestInterface $request) use ($responseFactory) {
                 $name = $request->getAttribute('name');
@@ -74,8 +75,8 @@ $app = new Application([
 
                 return $response;
             }
-        ), [], [Router::PATH_TOKENS => ['name' => '[a-z]+']])
-    ]), $responseFactory),
+        ), [], [RouteMatcher::PATH_TOKENS => ['name' => '[a-z]+']])
+    ]))), $responseFactory),
 ]);
 
 $app->emit($app->handle((new ServerRequestFactory())->createFromGlobals()));
