@@ -12,10 +12,11 @@ use Chubbyphp\Framework\Router\Exceptions\MethodNotAllowedException;
 use Chubbyphp\Framework\Router\Exceptions\MissingRouteByNameException;
 use Chubbyphp\Framework\Router\Exceptions\NotFoundException;
 use Chubbyphp\Framework\Router\RouteInterface;
-use Chubbyphp\Framework\Router\RouterInterface;
+use Chubbyphp\Framework\Router\RouteMatcherInterface;
+use Chubbyphp\Framework\Router\UrlGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class Router implements RouterInterface
+final class Router implements RouteMatcherInterface, UrlGeneratorInterface
 {
     public const PATH_DEFAULTS = 'defaults';
     public const PATH_HOST = 'host';
