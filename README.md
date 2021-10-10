@@ -27,7 +27,7 @@ Aura Router implementation for [chubbyphp-framework][1].
 
  * php: ^7.4|^8.0
  * [aura/router][2]: ^3.1
- * [chubbyphp/chubbyphp-framework][1]: ^3.2
+ * [chubbyphp/chubbyphp-framework][1]: ^3.5|^4.0@dev
  * [psr/http-message][3]: ^1.0.1
 
 ## Installation
