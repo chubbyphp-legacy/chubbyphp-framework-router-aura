@@ -13,6 +13,7 @@ namespace Chubbyphp\Framework\Router {
 namespace Chubbyphp\Framework\Router\Aura {
     use Aura\Router\Generator;
     use Aura\Router\Matcher;
+    use Aura\Router\Route;
     use Aura\Router\RouterContainer;
     use Aura\Router\Rule\Allows;
     use Chubbyphp\Framework\Router\Exceptions\MethodNotAllowedException;
@@ -59,6 +60,7 @@ namespace Chubbyphp\Framework\Router\Aura {
         public function match(ServerRequestInterface $request): RouteInterface
         {
             if (!$auraRoute = $this->matcher->match($request)) {
+                /** @var Route $failedAuraRoute */
                 $failedAuraRoute = $this->matcher->getFailedRoute();
 
                 if (Allows::class === $failedAuraRoute->failedRule) {
