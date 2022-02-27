@@ -25,9 +25,9 @@ Aura Router implementation for [chubbyphp-framework][1].
 
 ## Requirements
 
- * php: ^7.4|^8.0
+ * php: ^8.0
  * [aura/router][2]: ^3.1
- * [chubbyphp/chubbyphp-framework][1]: ^3.5|^4.0@dev
+ * [chubbyphp/chubbyphp-framework][1]: ^4.0
  * [psr/http-message][3]: ^1.0.1
 
 ## Installation
@@ -35,7 +35,7 @@ Aura Router implementation for [chubbyphp-framework][1].
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-framework-router-aura][10].
 
 ```bash
-composer require chubbyphp/chubbyphp-framework-router-aura "^1.2"
+composer require chubbyphp/chubbyphp-framework-router-aura "^1.3"
 ```
 
 ## Usage

@@ -41,12 +41,10 @@ namespace Chubbyphp\Framework\Router\Aura {
 
         private Matcher $matcher;
 
-        private string $basePath;
-
         /**
          * @param array<int, RouteInterface> $routes
          */
-        public function __construct(array $routes, string $basePath = '')
+        public function __construct(array $routes, private string $basePath = '')
         {
             $this->routes = $this->getRoutesByName($routes);
 
@@ -54,7 +52,6 @@ namespace Chubbyphp\Framework\Router\Aura {
 
             $this->generator = $routerContainer->getGenerator();
             $this->matcher = $routerContainer->getMatcher();
-            $this->basePath = $basePath;
         }
 
         public function match(ServerRequestInterface $request): RouteInterface
