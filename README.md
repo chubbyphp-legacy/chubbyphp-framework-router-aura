@@ -27,15 +27,16 @@ Aura Router implementation for [chubbyphp-framework][1].
 
  * php: ^8.0
  * [aura/router][2]: ^3.1
- * [chubbyphp/chubbyphp-framework][1]: ^4.0
- * [psr/http-message][3]: ^1.0.1
+ * [chubbyphp/chubbyphp-framework][1]: ^5.0.3
+ * [chubbyphp/chubbyphp-http-exception][3]: ^1.0.1
+ * [psr/http-message][4]: ^1.0.1
 
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-framework-router-aura][10].
 
 ```bash
-composer require chubbyphp/chubbyphp-framework-router-aura "^1.3"
+composer require chubbyphp/chubbyphp-framework-router-aura "^2.0"
 ```
 
 ## Usage
@@ -73,7 +74,7 @@ $app = new Application([
                 return $response;
             }
         ), [], [Router::PATH_TOKENS => ['name' => '[a-z]+']])
-    ]), $responseFactory),
+    ])),
 ]);
 
 $app->emit($app->handle((new ServerRequestFactory())->createFromGlobals()));
@@ -85,5 +86,6 @@ Dominik Zogg 2022
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-framework
 [2]: https://packagist.org/packages/aura/router
-[3]: https://packagist.org/packages/psr/http-message
+[3]: https://packagist.org/packages/chubbyphp/chubbyphp-http-exception
+[4]: https://packagist.org/packages/psr/http-message
 [10]: https://packagist.org/packages/chubbyphp/chubbyphp-framework-router-aura

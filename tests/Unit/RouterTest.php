@@ -6,10 +6,9 @@ namespace Chubbyphp\Tests\Framework\Router\Aura\Unit;
 
 use Aura\Router\Route;
 use Chubbyphp\Framework\Router\Aura\Router;
-use Chubbyphp\Framework\Router\Exceptions\MethodNotAllowedException;
 use Chubbyphp\Framework\Router\Exceptions\MissingRouteByNameException;
-use Chubbyphp\Framework\Router\Exceptions\NotFoundException;
 use Chubbyphp\Framework\Router\RouteInterface;
+use Chubbyphp\HttpException\HttpException;
 use Chubbyphp\Mock\Call;
 use Chubbyphp\Mock\MockByCallsTrait;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -72,13 +71,6 @@ final class RouterTest extends TestCase
 
     public function testMatchNotFound(): void
     {
-        $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage(
-            'The page "/" you are looking for could not be found.'
-                .' Check the address bar to ensure your URL is spelled correctly.'
-        );
-        $this->expectExceptionCode(404);
-
         /** @var MockObject|UriInterface $uri */
         $uri = $this->getMockByCalls(UriInterface::class, [
             Call::create('getPath')->with()->willReturn('/'),
@@ -102,17 +94,25 @@ final class RouterTest extends TestCase
         ]);
 
         $router = new Router([$route]);
-        $router->match($request);
+
+        try {
+            $router->match($request);
+            self::fail('Excepted exception');
+        } catch (HttpException $e) {
+            self::assertSame('Not Found', $e->getTitle());
+            self::assertSame(404, $e->getStatus());
+            self::assertSame([
+                'type' => 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.5',
+                'status' => 404,
+                'title' => 'Not Found',
+                'detail' => 'The page "/" you are looking for could not be found. Check the address bar to ensure your URL is spelled correctly.',
+                'instance' => null,
+            ], $e->jsonSerialize());
+        }
     }
 
     public function testMatchMethodNotAllowed(): void
     {
-        $this->expectException(MethodNotAllowedException::class);
-        $this->expectExceptionMessage(
-            'Method "POST" at path "/api/pets?offset=1&limit=20" is not allowed. Must be one of: "GET"'
-        );
-        $this->expectExceptionCode(405);
-
         /** @var MockObject|UriInterface $uri */
         $uri = $this->getMockByCalls(UriInterface::class, [
             Call::create('getPath')->with()->willReturn('/api/pets'),
@@ -124,8 +124,8 @@ final class RouterTest extends TestCase
             Call::create('getUri')->with()->willReturn($uri),
             Call::create('getUri')->with()->willReturn($uri),
             Call::create('getMethod')->with()->willReturn('POST'),
-            Call::create('getRequestTarget')->with()->willReturn('/api/pets?offset=1&limit=20'),
             Call::create('getMethod')->with()->willReturn('POST'),
+            Call::create('getRequestTarget')->with()->willReturn('/api/pets?offset=1&limit=20'),
         ]);
 
         /** @var MockObject|RouteInterface $route */
@@ -138,18 +138,25 @@ final class RouterTest extends TestCase
         ]);
 
         $router = new Router([$route]);
-        $router->match($request);
+
+        try {
+            $router->match($request);
+            self::fail('Excepted exception');
+        } catch (HttpException $e) {
+            self::assertSame('Method Not Allowed', $e->getTitle());
+            self::assertSame(405, $e->getStatus());
+            self::assertSame([
+                'type' => 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.6',
+                'status' => 405,
+                'title' => 'Method Not Allowed',
+                'detail' => 'Method "POST" at path "/api/pets?offset=1&limit=20" is not allowed. Must be one of: "GET"',
+                'instance' => null,
+            ], $e->jsonSerialize());
+        }
     }
 
     public function testMatchWithTokensNotMatch(): void
     {
-        $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage(
-            'The page "/api/pets/1" you are looking for could not be found.'
-                .' Check the address bar to ensure your URL is spelled correctly.'
-        );
-        $this->expectExceptionCode(404);
-
         /** @var MockObject|UriInterface $uri */
         $uri = $this->getMockByCalls(UriInterface::class, [
             Call::create('getPath')->with()->willReturn('/api/pets/1'),
@@ -175,7 +182,21 @@ final class RouterTest extends TestCase
         ]);
 
         $router = new Router([$route]);
-        $router->match($request);
+
+        try {
+            $router->match($request);
+            self::fail('Excepted exception');
+        } catch (HttpException $e) {
+            self::assertSame('Not Found', $e->getTitle());
+            self::assertSame(404, $e->getStatus());
+            self::assertSame([
+                'type' => 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.5',
+                'status' => 404,
+                'title' => 'Not Found',
+                'detail' => 'The page "/api/pets/1" you are looking for could not be found. Check the address bar to ensure your URL is spelled correctly.',
+                'instance' => null,
+            ], $e->jsonSerialize());
+        }
     }
 
     public function testMatchWithTokensMatch(): void
@@ -278,13 +299,6 @@ final class RouterTest extends TestCase
 
     public function testMatchWithHostNotMatch(): void
     {
-        $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage(
-            'The page "/" you are looking for could not be found.'
-                .' Check the address bar to ensure your URL is spelled correctly.'
-        );
-        $this->expectExceptionCode(404);
-
         /** @var MockObject|UriInterface $uri */
         $uri = $this->getMockByCalls(UriInterface::class, [
             Call::create('getPath')->with()->willReturn('/'),
@@ -308,7 +322,21 @@ final class RouterTest extends TestCase
         ]);
 
         $router = new Router([$route]);
-        $router->match($request);
+
+        try {
+            $router->match($request);
+            self::fail('Excepted exception');
+        } catch (HttpException $e) {
+            self::assertSame('Not Found', $e->getTitle());
+            self::assertSame(404, $e->getStatus());
+            self::assertSame([
+                'type' => 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.5',
+                'status' => 404,
+                'title' => 'Not Found',
+                'detail' => 'The page "/" you are looking for could not be found. Check the address bar to ensure your URL is spelled correctly.',
+                'instance' => null,
+            ], $e->jsonSerialize());
+        }
     }
 
     public function testMatchWithSecureMatch(): void
@@ -344,13 +372,6 @@ final class RouterTest extends TestCase
 
     public function testMatchWithSecureNotMatch(): void
     {
-        $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage(
-            'The page "/" you are looking for could not be found.'
-                .' Check the address bar to ensure your URL is spelled correctly.'
-        );
-        $this->expectExceptionCode(404);
-
         /** @var MockObject|UriInterface $uri */
         $uri = $this->getMockByCalls(UriInterface::class, [
             Call::create('getPath')->with()->willReturn('/'),
@@ -373,7 +394,21 @@ final class RouterTest extends TestCase
         ]);
 
         $router = new Router([$route]);
-        $router->match($request);
+
+        try {
+            $router->match($request);
+            self::fail('Excepted exception');
+        } catch (HttpException $e) {
+            self::assertSame('Not Found', $e->getTitle());
+            self::assertSame(404, $e->getStatus());
+            self::assertSame([
+                'type' => 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.5',
+                'status' => 404,
+                'title' => 'Not Found',
+                'detail' => 'The page "/" you are looking for could not be found. Check the address bar to ensure your URL is spelled correctly.',
+                'instance' => null,
+            ], $e->jsonSerialize());
+        }
     }
 
     public function testMatchWithSpecialMatch(): void
@@ -409,13 +444,6 @@ final class RouterTest extends TestCase
 
     public function testMatchWithSpecialNotMatch(): void
     {
-        $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage(
-            'The page "/" you are looking for could not be found.'
-                .' Check the address bar to ensure your URL is spelled correctly.'
-        );
-        $this->expectExceptionCode(404);
-
         /** @var MockObject|UriInterface $uri */
         $uri = $this->getMockByCalls(UriInterface::class, [
             Call::create('getPath')->with()->willReturn('/'),
@@ -441,7 +469,21 @@ final class RouterTest extends TestCase
         ]);
 
         $router = new Router([$route]);
-        $router->match($request);
+
+        try {
+            $router->match($request);
+            self::fail('Excepted exception');
+        } catch (HttpException $e) {
+            self::assertSame('Not Found', $e->getTitle());
+            self::assertSame(404, $e->getStatus());
+            self::assertSame([
+                'type' => 'https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.5',
+                'status' => 404,
+                'title' => 'Not Found',
+                'detail' => 'The page "/" you are looking for could not be found. Check the address bar to ensure your URL is spelled correctly.',
+                'instance' => null,
+            ], $e->jsonSerialize());
+        }
     }
 
     public function testMatchWithWildcardMatch(): void

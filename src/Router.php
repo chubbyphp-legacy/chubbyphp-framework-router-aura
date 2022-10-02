@@ -9,12 +9,11 @@ use Aura\Router\Matcher;
 use Aura\Router\Route;
 use Aura\Router\RouterContainer;
 use Aura\Router\Rule\Allows;
-use Chubbyphp\Framework\Router\Exceptions\MethodNotAllowedException;
 use Chubbyphp\Framework\Router\Exceptions\MissingRouteByNameException;
-use Chubbyphp\Framework\Router\Exceptions\NotFoundException;
 use Chubbyphp\Framework\Router\RouteInterface;
 use Chubbyphp\Framework\Router\RouteMatcherInterface;
 use Chubbyphp\Framework\Router\UrlGeneratorInterface;
+use Chubbyphp\HttpException\HttpException;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class Router implements RouteMatcherInterface, UrlGeneratorInterface
@@ -55,14 +54,23 @@ final class Router implements RouteMatcherInterface, UrlGeneratorInterface
             $failedAuraRoute = $this->matcher->getFailedRoute();
 
             if (Allows::class === $failedAuraRoute->failedRule) {
-                throw MethodNotAllowedException::create(
-                    $request->getRequestTarget(),
-                    $request->getMethod(),
-                    $failedAuraRoute->allows
-                );
+                throw HttpException::createMethodNotAllowed([
+                    'detail' => sprintf(
+                        'Method "%s" at path "%s" is not allowed. Must be one of: "%s"',
+                        $request->getMethod(),
+                        $request->getRequestTarget(),
+                        implode('", "', $failedAuraRoute->allows),
+                    ),
+                ]);
             }
 
-            throw NotFoundException::create($request->getRequestTarget());
+            throw HttpException::createNotFound([
+                'detail' => sprintf(
+                    'The page "%s" you are looking for could not be found.'
+                    .' Check the address bar to ensure your URL is spelled correctly.',
+                    $request->getRequestTarget()
+                ),
+            ]);
         }
 
         /** @var RouteInterface $route */
